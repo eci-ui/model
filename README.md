@@ -24,7 +24,7 @@ import { confirm } from "@ui/model";
 
 ## 案例
 
-**字符提示**
+**字符**
 ```
 <script setup lang="ts">
 import { confirm } from "@ui/model";
@@ -43,7 +43,7 @@ const onClick = function() {
 ```
 
 
-**组件提示**
+**组件**
 
 [参考@ui/form](https://github.com/eci-ui/form#readme)
 
@@ -54,7 +54,7 @@ import { confirm } from "@ui/model";
 confirm: <Value = string, T = object, Props = object>(value: Value, config?: string | ModalFuncProps, props?: Props) => Promise<T | Confirm>;
 ```
 
-名称 | 类型 | 是否必填 |描述
+名称 | 类型 | 是否必填 | 描述
 -- | -- | -- | -- 
 value | string、Component | 是 | 弹框内容
 config | string、ModalFuncProps | 否 | Antd Model Props 配置, 为 String 时默认为 title
@@ -62,3 +62,13 @@ props | Object | 否 | 当 value 为 Component 时有效, 以 Props 时传给该
 
 
 
+**iframe**
+
+```
+import { iframe } from "@ui/model";
+import { Button } from "ant-design-vue";
+
+const onClick = function() {
+  // 以全屏方式展示
+  iframe("url");
+}
