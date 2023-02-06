@@ -46,7 +46,9 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       } else if (submit){
         try {
           const result = await submit();
-          return onSubmit(result, config.onOk || resolve);
+          if (result) {
+            return onSubmit(result, config.onOk || resolve);
+          }
         } catch (error) {
           // todo
         }
