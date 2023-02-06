@@ -40,7 +40,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       class: "message-input",
     };
     const onClick = async function(e: Event, data?: object) {
-      const submit = center.value?.submit;
+      const submit = center.value?.submit || center.value?.onSubmit;
       if (data) {
         return onSubmit(data, config.onOk || resolve);
       } else if (submit){
