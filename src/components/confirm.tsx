@@ -39,7 +39,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       ...config,
       class: "message-input",
     };
-    const onClick = async function(e: Event, data?: object) {
+    const onClick = async function(e: Event, data?: T) {
       const submit = center.value?.submit || center.value?.onSubmit;
       if (data) {
         return onSubmit(data, config.onOk || resolve);
@@ -73,8 +73,8 @@ export const confirm = function<Value = string, T = object>(value: Value, config
         const attr = {
           ...props,
           ref: center,
-          onSubmit (e: Event) {
-            return onClick(e);
+          onSubmit (e: Event, value: T) {
+            return onClick(e, value);
           },
           onCancel () {
             return onCancel();
