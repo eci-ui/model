@@ -18,10 +18,10 @@
     "email": "svon.me@gmail.com",
     "url": "https://github.com/svonme"
   },
-  "homepage": "https://github.com/eci-ui/model#readme",
+  "homepage": "https://github.com/eci-ue/model#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eci-ui/model.git"
+    "url": "git+https://github.com/eci-ue/model.git"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.6",
