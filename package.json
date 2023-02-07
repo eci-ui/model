@@ -1,12 +1,13 @@
 {
   "name": "@ui/model",
   "private": false,
-  "version": "0.1.4",
+  "version": "0.1.5",
   "type": "module",
   "types": "types/index.d.ts",
   "license": "MIT",
   "main": "dist/model",
   "scripts": {
+    "test": "vite --clearScreen --port 3000",
     "build": "vue-tsc && vite build"
   },
   "keywords": [
@@ -28,6 +29,7 @@
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.0",
     "ant-design-vue": "^3.2.13",
+    "sass": "^1.58.0",
     "ts-node": "^10.9.1",
     "tslib": "^2.4.0",
     "typescript": "^4.6.4",

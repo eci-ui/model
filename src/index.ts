@@ -3,7 +3,7 @@
  * @author svon.me@gmail.com
  */
 
-
+import "./style/model.scss";
 import { h as createElement } from "vue";
 import { confirm as model } from "./components/confirm";
 import type { ModalFuncProps } from "ant-design-vue";

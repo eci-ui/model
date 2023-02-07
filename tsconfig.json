@@ -22,7 +22,10 @@
   "include": [
     "src/**/*.ts", 
     "src/**/*.tsx",
+    "test/**/*.ts",
+    "test/**/*.tsx",
     "types/*.ts",
+    "types/*..dts",
   ],
   "references": [
     { "path": "./tsconfig.node.json" }

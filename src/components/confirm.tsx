@@ -58,7 +58,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
     };
     const buttons = (<div>
       <Divider class="m-0" />
-      <div class="text-center pt-3">
+      <div style={{ "text-align": "center", "padding-top": "12px" }}>
         <Space>
           <Button onClick={ onCancel }>{ option.cancelText }</Button>
           <Button type="primary" onClick={ onClick }>{ option.okText }</Button>
@@ -69,7 +69,6 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       ...option,
       content: function(): any {
         const slots = { buttons };
-        const className = option["className"] || ["px-6", "py-3"];
         const attr = {
           ...props,
           ref: center,
@@ -80,7 +79,11 @@ export const confirm = function<Value = string, T = object>(value: Value, config
             return onCancel();
           }
         };
-        return (<div class={ className }>{ createElement(value as any, attr, slots) }</div>);
+        return (<div class={ option["className"] } style={{"padding": "12px 24px"}}>
+          {
+            typeof value === "string" ? <><p>{ value }</p>{ buttons }</> : createElement(value as any, attr, slots) 
+          }
+        </div>);
       },
     });
     if (config.onOk) {

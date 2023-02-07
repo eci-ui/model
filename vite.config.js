@@ -8,10 +8,21 @@ export default defineConfig({
     extensions: [".ts", ".vue", ".js", ".tsx"],
     alias: {
       "src/": `${path.resolve(__dirname, "src")}/`,
+      "test/": `${path.resolve(__dirname, "test")}/`,
       "types/": `${path.resolve(__dirname, "types")}/`,
     },
   },
   plugins: [vue(), jsx()],
+  css: {
+    preprocessorOptions: {
+      css: {
+        charset: false
+      },
+      scss: {
+        additionalData: "",
+      }
+    }
+  },
   build: {
     target: "modules",
     polyfillModulePreload: false,
@@ -21,6 +32,7 @@ export default defineConfig({
       formats: ["es"],
       fileName: "model"
     },
+    cssCodeSplit: true,
     sourcemap: true,
     manifest: false,
     rollupOptions: {
