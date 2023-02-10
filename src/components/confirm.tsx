@@ -7,8 +7,12 @@ import { ref, h as createElement } from "vue";
 import Modal from "ant-design-vue/lib/modal/index";
 import { Space, Button, Divider } from "ant-design-vue";
 
-import type { Confirm } from "types/confirm";
 import type { ModalFuncProps } from "ant-design-vue";
+
+export interface Confirm {
+  destroy: () => void;
+  update?: (config: ModalFuncProps) => void;
+}
 
 export const confirm = function<Value = string, T = object>(value: Value, config: ModalFuncProps, props: object): Promise<T | Confirm> {
   let modalConfirm: Confirm;

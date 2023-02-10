@@ -1,4 +1,4 @@
-<h1 align="center">@ui/model</h1>
+<h1 align="center">@ue/model</h1>
 
 <div align="center">
   <h3>基于 Ant Design 而封装的弹框</h3>
@@ -13,13 +13,13 @@
 ## 安装
 
 ```
-pnpm install @ui/model --registry http://npm.jslion.xyz/
+pnpm install @ue/model --registry http://npm.jslion.xyz/
 ```
 
 **使用**
 
 ```
-import { confirm } from "@ui/model";
+import { confirm } from "@ue/model";
 ```
 
 ## 案例
@@ -27,7 +27,7 @@ import { confirm } from "@ui/model";
 **字符**
 ```
 <script setup lang="ts">
-import { confirm } from "@ui/model";
+import { confirm } from "@ue/model";
 import { Button } from "ant-design-vue";
 
 const onClick = function() {
@@ -50,7 +50,7 @@ const onClick = function() {
 ## 参数配置
 
 ```
-import { confirm } from "@ui/model";
+import { confirm } from "@ue/model";
 confirm: <Value = string, T = object, Props = object>(value: Value, config?: string | ModalFuncProps, props?: Props) => Promise<T | Confirm>;
 ```
 
@@ -65,7 +65,7 @@ props | Object | 否 | 当 value 为 Component 时有效, 以 Props 时传给该
 **iframe**
 
 ```
-import { iframe } from "@ui/model";
+import { iframe } from "@ue/model";
 import { Button } from "ant-design-vue";
 
 const onClick = function() {
