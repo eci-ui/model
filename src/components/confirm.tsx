@@ -3,6 +3,7 @@
  * @author svon.me@gmail.com
  */
 
+import * as _ from "lodash-es";
 import { ref, h as createElement } from "vue";
 import Modal from "ant-design-vue/lib/modal/index";
 import { Space, Button, Divider } from "ant-design-vue";
@@ -32,7 +33,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
 
   return new Promise(function(resolve) {
     const center = ref<any>(null);
-    const option = { 
+    const option = Object.assign({ 
       width: 800,
       icon: null,
       closable: true,
@@ -40,9 +41,8 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       cancelText: "Cancel",
       keyboard: true,
       className: "",
-      ...config,
       class: "message-input",
-    };
+    }, _.omit(config, ["icon", "class"]));
     const onClick = async function(e: Event, data?: T) {
       const submit = center.value?.submit || center.value?.onSubmit;
       if (data) {
@@ -83,7 +83,8 @@ export const confirm = function<Value = string, T = object>(value: Value, config
             return onCancel();
           }
         };
-        return (<div class={ option["className"] } style={{"padding": "12px 24px"}}>
+        
+        return (<div class={ config.class } style={ config.class ? {} : {"padding": "12px 24px"}}>
           {
             typeof value === "string" ? <><p>{ value }</p>{ buttons }</> : createElement(value as any, attr, slots) 
           }

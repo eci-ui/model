@@ -33,7 +33,7 @@ export const iframe = function(src: string) {
   });
   const config = {
     width: "100%",
-    className: ["h-full"],
+    "class": "h-full",
     wrapClassName: "full-modal"
   };
   return confirm(iframe, config as ModalFuncProps);

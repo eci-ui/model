@@ -37,8 +37,9 @@ export default defineConfig({
     manifest: false,
     rollupOptions: {
       external: [
-        /vue/i,
-        /ant-design-vue/i
+        /^vue/i,
+        /^lodash/i,
+        /^ant/i
       ],
       output: {
         inlineDynamicImports: true
