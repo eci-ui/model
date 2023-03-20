@@ -3,6 +3,7 @@
  * @author svon.me@gmail.com
  */
 
+import I18n from "@ue/i18n";
 import * as _ from "lodash-es";
 import { ref, h as createElement } from "vue";
 import Modal from "ant-design-vue/lib/modal/index";
@@ -16,6 +17,7 @@ export interface Confirm {
 }
 
 export const confirm = function<Value = string, T = object>(value: Value, config: ModalFuncProps, props: object): Promise<T | Confirm> {
+  const i18n = I18n();
   let modalConfirm: Confirm;
   const onCancel = function() {
     if (config.onCancel) {
@@ -37,8 +39,8 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       width: 800,
       icon: null,
       closable: true,
-      okText: "Submit",
-      cancelText: "Cancel",
+      okText: i18n.common.button.submit,
+      cancelText: i18n.common.button.cancel,
       keyboard: true,
       className: "",
       class: "message-input",

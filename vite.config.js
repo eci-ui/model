@@ -39,7 +39,8 @@ export default defineConfig({
       external: [
         /^vue/i,
         /^lodash/i,
-        /^ant/i
+        /^ant/i,
+        /^@ue/i,
       ],
       output: {
         inlineDynamicImports: true

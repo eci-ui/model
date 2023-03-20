@@ -4,11 +4,12 @@
  */
 
 import "./style/model.scss";
+import form from "./components/form";
 import { h as createElement } from "vue";
 import { confirm as model } from "./components/confirm";
 import type { ModalFuncProps } from "ant-design-vue";
 
-export { model };
+export { model, form };
 
 export const confirm = function<Value = string, T = object, Props = object>(value: Value, config?: string | ModalFuncProps, props?: Props) {
   const option = {};
