@@ -3,8 +3,8 @@
  * @author svon.me@gmail.com
  */
 
+import { Form } from "@ue/form";
 import { confirm } from "./confirm";
-import Form from "../components/form";
 
 import { ref, toRaw } from "vue";
 import type { Component } from "vue";
