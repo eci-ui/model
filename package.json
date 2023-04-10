@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@ue/form": "^0.1.7",
-    "@ue/i18n": "^0.1.62",
+    "@ue/i18n": "^0.1.66",
     "ant-design-vue": "^3.2.13",
     "lodash-es": "^4.17.21"
   },

@@ -16,7 +16,9 @@ onMounted(async function() {
       lable: "B",
       component: Input
     }
-  ]);
+  ], {
+    title: "AAA"
+  });
 });
 </script>
 
