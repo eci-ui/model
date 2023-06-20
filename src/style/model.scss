@@ -1,4 +1,12 @@
 .ant-modal-wrap {
+  &.no-title {
+    .ant-modal-close-x {
+      width: 1.875rem;
+      height: 1.875rem;
+      line-height: 1.5rem;
+    }
+  }
+  
   &.full-modal {
     .ant-modal {
       max-width: 100%;

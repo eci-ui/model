@@ -8,8 +8,8 @@ import { confirm } from "./confirm";
 
 import { ref, toRaw } from "vue";
 import type { Component } from "vue";
+import type { ModalFuncProps } from "./type";
 import type { FormOptionValue } from "@ue/form";
-import type { ModalFuncProps } from "ant-design-vue";
 
 interface State {
   [key: string]: any;
@@ -35,6 +35,7 @@ const form = function<T = State>(items: FormOptionValue, config?: string | Modal
         resolve(temp as T);
       },
     });
+
     confirm<Component, T>(Form as Component, option, {
       items,
       value: state.value,
