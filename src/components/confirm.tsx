@@ -19,11 +19,15 @@ export interface Confirm {
 export const confirm = function<Value = string, T = object>(value: Value, config: ModalFuncProps, props: object): Promise<T | Confirm> {
   const i18n = I18n();
   let modalConfirm: Confirm;
-  const onCancel = function() {
+  const onCancel = function(callback?: (v?: T) => void) {
     if (config.onCancel) {
       config.onCancel();
+    } else if(callback && typeof callback === "function") {
+      callback();
     }
-    modalConfirm.destroy();
+    if (modalConfirm && modalConfirm.destroy) {
+      modalConfirm.destroy();
+    }
   };
 
 
@@ -45,7 +49,9 @@ export const confirm = function<Value = string, T = object>(value: Value, config
     if (typeof status === "boolean" && status === false) {
       return;
     }
-    setTimeout(onCancel);
+    setTimeout(function() {
+      onCancel();
+    });
   }
 
   return new Promise(function(resolve) {
@@ -79,11 +85,15 @@ export const confirm = function<Value = string, T = object>(value: Value, config
         return onSubmit(void 0, config.onOk || resolve);
       }
     };
+    const onClose = function() {
+      // @ts-ignore
+      onCancel(resolve);
+    }
     const buttons = (<div>
       <Divider class="m-0" />
       <div style={{ "text-align": "center", "padding-top": "12px" }}>
         <Space>
-          <Button { ...option.cancelButtonProps } onClick={ onCancel }>{ option.cancelText }</Button>
+          <Button { ...option.cancelButtonProps } onClick={ onClose }>{ option.cancelText }</Button>
           <Button type="primary" { ...option.okButtonProps } onClick={ onClick } loading={ option.loading?.value }>{ option.okText }</Button>
         </Space>
       </div>
@@ -91,6 +101,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
 
     modalConfirm =  Modal.confirm({
       ...option,
+      onCancel: onClose,
       content: function(): any {
         const slots = { buttons };
         const attr = {
@@ -99,9 +110,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
           onSubmit (e: Event, v: T) {
             return onClick(e, v);
           },
-          onCancel () {
-            return onCancel();
-          }
+          onCancel: onClose
         };
         
         return (<div class={ config.class } style={ config.class ? {} : {"padding": "12px 24px"}}>
