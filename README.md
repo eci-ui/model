@@ -1,4 +1,4 @@
-<h1 align="center">@ue/model</h1>
+<h1 align="center">@ue/modal</h1>
 
 <div align="center">
   <h3>基于 Ant Design 而封装的弹框</h3>
@@ -8,18 +8,18 @@
 ## 功能
 
 - 使用简单，无需配置 Dom 结构
-- 无需使用变量控制 Model 的显示与隐藏
+- 无需使用变量控制 Modal 的显示与隐藏
 
 ## 安装
 
 ```
-pnpm install @ue/model --registry http://npm.jslion.xyz/
+pnpm install @ue/modal --registry http://npm.ectranslate.com/
 ```
 
 **使用**
 
 ```
-import { confirm } from "@ue/model";
+import { confirm } from "@ue/modal";
 ```
 
 ## 案例
@@ -27,7 +27,7 @@ import { confirm } from "@ue/model";
 **字符**
 ```
 <script setup lang="ts">
-import { confirm } from "@ue/model";
+import { confirm } from "@ue/modal";
 import { Button } from "ant-design-vue";
 
 const onClick = function() {
@@ -45,7 +45,7 @@ const onClick = function() {
 **表单**
 ```
 <script setup lang="ts">
-import { form } from "@ui/model";
+import { form } from "@ui/modal";
 import { Input, InputPassword, Button } from "ant-design-vue";
 
 const items = [
@@ -61,7 +61,7 @@ const items = [
   }
 ];
 
-const onModel = async function() {
+const onModal = async function() {
   const data = await form(items, "用户登录");
   if (data) {
     console.log(data);
@@ -71,7 +71,7 @@ const onModel = async function() {
 
 <template>
   <div>
-    <Button @click="onModel">弹框模式表单</Button>
+    <Button @click="onModal">弹框模式表单</Button>
   </div>
 </template>
 ```
@@ -83,14 +83,14 @@ const onModel = async function() {
 ## 参数配置
 
 ```
-import { confirm } from "@ue/model";
+import { confirm } from "@ue/modal";
 confirm: <Value = string, T = object, Props = object>(value: Value, config?: string | ModalFuncProps, props?: Props) => Promise<T | Confirm>;
 ```
 
 名称 | 类型 | 是否必填 | 描述
 -- | -- | -- | -- 
 value | string、Component | 是 | 弹框内容
-config | string、ModalFuncProps | 否 | Antd Model Props 配置, 为 String 时默认为 title
+config | string、ModalFuncProps | 否 | Antd Modal Props 配置, 为 String 时默认为 title
 props | Object | 否 | 当 value 为 Component 时有效, 以 Props 时传给该组件
 
 
@@ -98,7 +98,7 @@ props | Object | 否 | 当 value 为 Component 时有效, 以 Props 时传给该
 **iframe**
 
 ```
-import { iframe } from "@ue/model";
+import { iframe } from "@ue/modal";
 import { Button } from "ant-design-vue";
 
 const onClick = function() {

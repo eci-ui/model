@@ -3,13 +3,13 @@
  * @author svon.me@gmail.com
  */
 
-import "./style/model.scss";
+import "./style/modal.scss";
 import form from "./components/form";
 import { h as createElement } from "vue";
-import { confirm as model } from "./components/confirm";
+import { confirm as modal } from "./components/confirm";
 import type { ModalFuncProps } from "ant-design-vue";
 
-export { model, form };
+export { modal, form };
 
 export const confirm = function<Value = string, T = object, Props = object>(value: Value, config?: string | ModalFuncProps, props?: Props) {
   const option = {};
@@ -18,7 +18,7 @@ export const confirm = function<Value = string, T = object, Props = object>(valu
   } else if (config && typeof config === "object") {
     Object.assign(option, config);
   };
-  return model<Value, T>(value, option, props || {});
+  return modal<Value, T>(value, option, props || {});
 };
 
 export const iframe = function(src: string) {

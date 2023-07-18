@@ -1,11 +1,11 @@
 {
-  "name": "@ue/model",
+  "name": "@ue/modal",
   "private": false,
-  "version": "0.1.7",
+  "version": "0.2.0",
   "type": "module",
   "types": "types/index.d.ts",
   "license": "MIT",
-  "main": "dist/model",
+  "main": "dist/modal",
   "scripts": {
     "test": "vite --clearScreen --port 3000",
     "build": "vite build",
@@ -13,17 +13,17 @@
     "types": "vue-tsc --jsx preserve --declaration --noEmit false --emitDeclarationOnly --resolveJsonModule true --esModuleInterop --declarationDir ./types ./src/index"
   },
   "keywords": [
-    "model"
+    "modal"
   ],
   "author": {
     "name": "svon",
     "email": "svon.me@gmail.com",
     "url": "https://github.com/svonme"
   },
-  "homepage": "https://github.com/eci-ue/model#readme",
+  "homepage": "https://github.com/eci-ue/modal#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eci-ue/model.git"
+    "url": "git+https://github.com/eci-ue/modal.git"
   },
   "dependencies": {
     "@ue/form": "0.1.7-1",
