@@ -28,9 +28,9 @@ export default defineConfig({
     polyfillModulePreload: false,
     lib: {
       entry: "src/index",
-      name: "model",
+      name: "modal",
       formats: ["es"],
-      fileName: "model"
+      fileName: "modal"
     },
     cssCodeSplit: true,
     sourcemap: true,
