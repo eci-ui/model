@@ -3,21 +3,23 @@
  * @author svon.me@gmail.com
  */
 
-import I18n from "@ue/i18n";
+
 import * as _ from "lodash-es";
 import { ref, h as createElement } from "vue";
+import locale from "ant-design-vue/es/locale/en_US";
 import Modal from "ant-design-vue/lib/modal/index";
 import { Space, Button, Divider } from "ant-design-vue";
 
-import type { ModalFuncProps } from "./type";
+import type { StyleValue } from "vue";
+import type { ModalProps } from "./type";
+
 
 export interface Confirm {
   destroy: () => void;
-  update?: (config: ModalFuncProps) => void;
+  update?: (config: ModalProps) => void;
 }
 
-export const confirm = function<Value = string, T = object>(value: Value, config: ModalFuncProps, props: object): Promise<T | Confirm> {
-  const i18n = I18n();
+export const confirm = function<Value = string, T = object>(value: Value, config: ModalProps, props: object): Promise<T | Confirm> {
   let modalConfirm: Confirm;
   const onCancel = function(callback?: (v?: T) => void) {
     if (config.onCancel) {
@@ -60,8 +62,8 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       width: 800,
       icon: null,
       closable: true,
-      okText: i18n.common.button.submit,
-      cancelText: i18n.common.button.cancel,
+      okText: locale.Modal?.okText || "Submit",
+      cancelText: locale.Modal?.cancelText || "Cancel",
       keyboard: true,
       className: "",
       class: "message-input",
@@ -82,19 +84,25 @@ export const confirm = function<Value = string, T = object>(value: Value, config
           // todo
         }
       } else {
-        return onSubmit(void 0, config.onOk || resolve);
+        return onSubmit(true, config.onOk || resolve);
       }
     };
     const onClose = function() {
       // @ts-ignore
       onCancel(resolve);
     }
-    const buttons = (<div>
-      <Divider class="m-0" />
-      <div style={{ "text-align": "center", "padding-top": "12px" }}>
+
+    const textAlign: string = option.textAlign ? option.textAlign : "center";
+    const buttonStyle: StyleValue = {
+      "padding": "12px 24px 0", 
+      "textAlign": textAlign as any
+    }
+    const buttons = (<div style="margin: 0 -24px;">
+      { option.divider ? <Divider style="margin: 0;"></Divider> : void 0 }
+      <div style={ buttonStyle }>
         <Space>
           <Button { ...option.cancelButtonProps } onClick={ onClose }>{ option.cancelText }</Button>
-          <Button type="primary" { ...option.okButtonProps } onClick={ onClick } loading={ option.loading?.value }>{ option.okText }</Button>
+          <Button type="primary" loading={ option.loading?.value } { ...option.okButtonProps } onClick={ onClick }>{ option.okText }</Button>
         </Space>
       </div>
     </div>);
@@ -115,7 +123,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
         
         return (<div class={ config.class } style={ config.class ? {} : {"padding": "12px 24px"}}>
           {
-            typeof value === "string" ? <><p>{ value }</p>{ buttons }</> : createElement(value as any, attr, slots) 
+            createElement(value as any, attr, slots)
           }
         </div>);
       },

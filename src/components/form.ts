@@ -8,19 +8,19 @@ import { confirm } from "./confirm";
 
 import { ref, toRaw } from "vue";
 import type { Component } from "vue";
-import type { ModalFuncProps } from "./type";
+import type { ModalProps } from "./type";
 import type { FormOptionValue } from "@ue/form";
 
 interface State {
   [key: string]: any;
 }
-const form = function<T = State>(items: FormOptionValue, config?: string | ModalFuncProps): Promise<T> {
+const form = function<T = State>(items: FormOptionValue, config?: string | ModalProps): Promise<T> {
   const state = ref<State>({});
   const onUpdate = (value: State) => (state.value = value);
 
   return new Promise<T>(function(resolve) {
     const opt = config ? (typeof config === "string" ? { title: config } : config) : {};
-    const option: ModalFuncProps = Object.assign({ ...opt }, {
+    const option: ModalProps = Object.assign({ divider: true }, { ...opt }, {
       onCancel: () => {
         if (opt.onCancel) {
           return opt.onCancel();
@@ -37,10 +37,11 @@ const form = function<T = State>(items: FormOptionValue, config?: string | Modal
     });
 
     confirm<Component, T>(Form as Component, option, {
+      option,
       items,
       value: state.value,
       "onUpdate:value": onUpdate,
-      style: { paddingTop: "12px" }
+      class: "confirm-form"
     });
   });
 }

@@ -1,6 +1,4 @@
-import type { Ref } from "vue";
-import type { ModalFuncProps as ModalProps } from "ant-design-vue";
+import type { FormOption } from "@ue/form";
 
-export interface ModalFuncProps extends ModalProps{
-  loading?: Ref<boolean>;
+export interface ModalProps extends FormOption{
 }

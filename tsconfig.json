@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "build",
-    "target": "ESNext",
+    "target": "ES2015",
     "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "Node",
@@ -10,7 +10,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
+    "lib": ["ES2015", "DOM"],
     "skipLibCheck": true,
     "noEmit": true,
     "experimentalDecorators": true,

@@ -1,14 +1,13 @@
 {
   "name": "@ue/modal",
   "private": false,
-  "version": "0.2.3",
+  "version": "0.3.0",
   "type": "module",
   "types": "types/index.d.ts",
   "license": "MIT",
   "main": "./dist/modal.js",
   "scripts": {
     "build": "vite build",
-    "postbuild": "npm run types",
     "test": "vite --clearScreen --port 3000",
     "types": "vue-tsc --jsx preserve --declaration --noEmit false --emitDeclarationOnly --resolveJsonModule true --esModuleInterop --declarationDir ./types ./src/index"
   },
@@ -28,18 +27,17 @@
   "devDependencies": {
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.8.4",
-    "@ue/form": "^0.1.8",
-    "@ue/i18n": "^0.1.68",
+    "@ue/form": "^0.2.1",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.0",
     "ant-design-vue": "^3.2.13",
+    "less": "^4.2.0",
     "lodash-es": "^4.17.21",
-    "sass": "^1.58.0",
     "ts-node": "^10.9.1",
     "tslib": "^2.4.0",
     "typescript": "^4.6.4",
-    "vite": "^4.1.0",
-    "vue": "^3.2.45",
+    "vite": "^4.5.0",
+    "vue": "^3.3.7",
     "vue-tsc": "^1.0.24"
   },
   "files": [
