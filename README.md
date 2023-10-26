@@ -19,7 +19,7 @@ pnpm install @ue/modal --registry http://npm.ectranslate.com/
 **使用**
 
 ```
-import { confirm } from "@ue/modal";
+import * as modal from "@ue/modal";
 ```
 
 ## 案例
@@ -27,11 +27,11 @@ import { confirm } from "@ue/modal";
 **字符**
 ```
 <script setup lang="ts">
-import { confirm } from "@ue/modal";
+import * as modal from "@ue/modal";
 import { Button } from "ant-design-vue";
 
 const onClick = function() {
-  confirm("hello World", "提示");
+  modal.confirm("hello World", "提示");
 }
 </script>
 
@@ -45,24 +45,24 @@ const onClick = function() {
 **表单**
 ```
 <script setup lang="ts">
-import { form } from "@ui/modal";
+import * as modal from "@ui/modal";
 import { Input, InputPassword, Button } from "ant-design-vue";
 
 const items = [
   {
     key: "name",
     component: Input,
-    meta: { placeholder: "请输入账号" }
+    props: { placeholder: "请输入账号" }
   },
   {
     key: "password",
     component: InputPassword,
-    meta: { placeholder: "请输入密码" }
+    props: { placeholder: "请输入密码" }
   }
 ];
 
 const onModal = async function() {
-  const data = await form(items, "用户登录");
+  const data = await modal.form<{ name: string, password: string }>(items, "用户登录");
   if (data) {
     console.log(data);
   }
@@ -83,8 +83,17 @@ const onModal = async function() {
 ## 参数配置
 
 ```
-import { confirm } from "@ue/modal";
-confirm: <Value = string, T = object, Props = object>(value: Value, config?: string | ModalFuncProps, props?: Props) => Promise<T | Confirm>;
+import * as modal from "@ui/modal";
+
+import xxx from "xxx.vue";
+
+const data = await modal.confirm(xxx, {
+  title: "弹框",
+  width: 600,
+}, {
+  // xxxx 组件所需 props 数据
+})
+
 ```
 
 名称 | 类型 | 是否必填 | 描述
@@ -98,10 +107,9 @@ props | Object | 否 | 当 value 为 Component 时有效, 以 Props 时传给该
 **iframe**
 
 ```
-import { iframe } from "@ue/modal";
-import { Button } from "ant-design-vue";
+import * as modal from "@ue/modal";
 
 const onClick = function() {
   // 以全屏方式展示
-  iframe("url");
+  modal.iframe("url");
 }
