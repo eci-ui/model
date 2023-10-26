@@ -9,12 +9,17 @@ import { confirm } from "./confirm";
 import { ref, toRaw } from "vue";
 import type { Component } from "vue";
 import type { ModalProps } from "./type";
-import type { FormOptionValue } from "@ue/form";
+import type { FormOptionValue, FormLayout as Layout } from "@ue/form";
 
 interface State {
   [key: string]: any;
 }
-const form = function<T = State>(items: FormOptionValue, config?: string | ModalProps): Promise<T> {
+
+interface Props {
+  layout?: Layout | string;
+}
+
+const form = function<T = State>(items: FormOptionValue, config?: string | ModalProps, props?: Props): Promise<T> {
   const state = ref<State>({});
   const onUpdate = (value: State) => (state.value = value);
 
@@ -37,11 +42,12 @@ const form = function<T = State>(items: FormOptionValue, config?: string | Modal
     });
 
     confirm<Component, T>(Form as Component, option, {
-      option,
       items,
+      option,
       value: state.value,
+      class: "confirm-form",
       "onUpdate:value": onUpdate,
-      class: "confirm-form"
+      layout: props ? props.layout : void 0
     });
   });
 }
