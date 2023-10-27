@@ -1,7 +1,7 @@
 {
   "name": "@ue/modal",
   "private": false,
-  "version": "0.3.2",
+  "version": "0.3.3",
   "type": "module",
   "types": "types/index.d.ts",
   "license": "MIT",
@@ -27,7 +27,7 @@
   "devDependencies": {
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.8.4",
-    "@ue/form": "^0.2.2",
+    "@ue/form": "^0.2.3",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitejs/plugin-vue-jsx": "^3.0.0",
     "ant-design-vue": "^3.2.13",

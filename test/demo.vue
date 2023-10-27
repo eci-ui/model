@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import * as modal from "../src/index";
-import { Input } from "ant-design-vue";
+import { Input, Upload } from "ant-design-vue";
 import Test from "./test.vue";
 
 const onSubmit = function() {
@@ -16,12 +16,12 @@ onMounted(async function() {
   // modal.form([
   //   {
   //     key: "a",
-  //     lable: "A",
+  //     label: "A",
   //     component: Input
   //   },
   //   {
   //     key: "b",
-  //     lable: "B",
+  //     label: "B",
   //     component: Input
   //   }
   // ], {
@@ -29,9 +29,12 @@ onMounted(async function() {
   //   onOk: () => onSubmit,
   // });
 
+  modal.confirm(Test);
+
   // modal.iframe("http://erp.eciol-dev.com/");
-  const status = await modal.sure("hello world", "提示");
-  console.log(status);
+  // const status = await modal.sure("hello world", "提示");
+  // console.log(status);
+
   
 });
 </script>

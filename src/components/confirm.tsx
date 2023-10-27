@@ -87,7 +87,16 @@ export const confirm = function<Value = string, T = object>(value: Value, config
         return onSubmit(true, config.onOk || resolve);
       }
     };
-    const onClose = function() {
+    const onClose = function(e: Event) {
+      const target = e.target as HTMLInputElement;
+      if (target) {
+        // 拦截 input file 暴露的 cancel 事件
+        const tagName = (target.tagName || "").toLowerCase();
+        const type = target.getAttribute ? target.getAttribute("type") : "";
+        if (tagName === "input" && type === "file") {
+          return false;
+        }
+      }
       // @ts-ignore
       onCancel(resolve);
     }
