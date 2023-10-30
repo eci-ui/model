@@ -66,7 +66,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       cancelText: locale.Modal?.cancelText || "Cancel",
       keyboard: true,
       className: "",
-      class: "message-input",
+      class: "ue-modal-main",
       okButtonProps: {},
       cancelButtonProps: {},
     }, _.omit(config, ["icon", "class"]));

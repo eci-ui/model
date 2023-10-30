@@ -13,24 +13,21 @@ const onSubmit = function() {
 }
 
 onMounted(async function() {
-  // modal.form([
-  //   {
-  //     key: "a",
-  //     label: "A",
-  //     component: Input
-  //   },
-  //   {
-  //     key: "b",
-  //     label: "B",
-  //     component: Input
-  //   }
-  // ], {
-  //   title: "AAA",
-  //   onOk: () => onSubmit,
-  // });
-
-  modal.confirm(Test);
-
+  modal.form([
+    {
+      key: "a",
+      label: "A",
+      component: Input
+    },
+    {
+      key: "b",
+      label: "B",
+      component: Input
+    }
+  ], {
+    title: "AAA",
+    onOk: () => onSubmit,
+  });
   // modal.iframe("http://erp.eciol-dev.com/");
   // const status = await modal.sure("hello world", "提示");
   // console.log(status);

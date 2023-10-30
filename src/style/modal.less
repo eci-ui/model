@@ -7,7 +7,7 @@
     }
   }
   
-  &.full-modal {
+  &.full-ue-modal {
     .ant-modal {
       max-width: 100%;
       top: 0;
@@ -35,18 +35,16 @@
   }
 
 
-  &.failure {
-    .ant-modal-body {
-      padding-right: 0;
-    }
-  }
-  .message-input {
+  .ant-modal.ue-modal-main {
     .ant-modal-body {
       padding: 0 !important;
     }
     .ant-modal-confirm-content {
       padding: 0 !important; 
       margin: 0 !important;
+    }
+    .ant-modal-confirm-btns {
+      display: none;
     }
     .ant-modal-confirm-title {
       border-color: #f0f0f0;
@@ -58,16 +56,8 @@
       font-size: 1rem;
       line-height: 24px;
     }
-    .ant-modal-confirm-btns {
-      display: none;
+    .confirm-form {
+      padding: 24px 24px 12px;
     }
-  }
-  .ant-modal-content {
-    .ant-modal-footer {
-      text-align: center;
-    }
-  }
-  .confirm-form {
-    padding: 24px 24px 12px;
   }
 }

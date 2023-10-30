@@ -70,7 +70,7 @@ export const iframe = function(src: string) {
   const config: ModalProps = {
     width: "100%",
     "class": "h-full",
-    wrapClassName: "full-modal"
+    wrapClassName: "full-ue-modal"
   };
   return confirm(iframe, config);
 };
