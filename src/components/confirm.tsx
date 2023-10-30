@@ -6,6 +6,7 @@
 
 import * as _ from "lodash-es";
 import { ref, h as createElement } from "vue";
+import { getAppContext } from "../utils/config";
 import locale from "ant-design-vue/es/locale/en_US";
 import Modal from "ant-design-vue/lib/modal/index";
 import { Space, Button, Divider } from "ant-design-vue";
@@ -69,6 +70,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       class: "ue-modal-main",
       okButtonProps: {},
       cancelButtonProps: {},
+      appContext: getAppContext(),
     }, _.omit(config, ["icon", "class"]));
     const onClick = async function(e: Event, data?: T) {
       const submit = center.value?.submit || center.value?.onSubmit;

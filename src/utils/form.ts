@@ -4,18 +4,19 @@
  */
 
 import { Form } from "@ue/form";
-import { confirm } from "./confirm";
-
+import { toConfig } from "./config";
 import { ref, toRaw } from "vue";
+import { confirm } from "../components/confirm";
+
 import type { Component } from "vue";
-import type { ModalProps } from "./type";
+import type { ModalProps } from "../components/type";
 import type { FormOptionValue, FormLayout as Layout } from "@ue/form";
 
-interface State {
+export interface State {
   [key: string]: any;
 }
 
-interface Props {
+export interface Props {
   layout?: Layout | string;
 }
 
@@ -24,8 +25,8 @@ const form = function<T = State>(items: FormOptionValue, config?: string | Modal
   const onUpdate = (value: State) => (state.value = value);
 
   return new Promise<T>(function(resolve) {
-    const opt = config ? (typeof config === "string" ? { title: config } : config) : {};
-    const option: ModalProps = Object.assign({ divider: true }, { ...opt }, {
+    const opt = toConfig(config);
+    const option: ModalProps = Object.assign({ divider: true }, opt, {
       onCancel: () => {
         if (opt.onCancel) {
           return opt.onCancel();

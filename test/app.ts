@@ -4,6 +4,7 @@
  */
 
 import Demo from "./demo.vue";
+import modal from "../src/index";
 import { createApp as create } from "vue";
 
 import "ant-design-vue/dist/antd.css";
@@ -24,6 +25,7 @@ function App() {
     };
   }
   const app: App = create(Demo);
+  app.use(modal);
   app.mount("#app");;
 }
 
