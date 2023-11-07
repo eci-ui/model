@@ -14,47 +14,54 @@ import { Space, Button, Divider } from "ant-design-vue";
 import type { StyleValue } from "vue";
 import type { ModalProps } from "./type";
 
+type Result<T> = T | boolean | undefined;
+type Callback<T> = (value?: Result<T>) => Result<T>;
 
 export interface Confirm {
   destroy: () => void;
   update?: (config: ModalProps) => void;
 }
 
-export const confirm = function<Value = string, T = object>(value: Value, config: ModalProps, props: object): Promise<T | Confirm> {
+export const confirm = function<Value = string, T = object>(value: Value, config: ModalProps, props: object): Promise<T | boolean | undefined> {
   let modalConfirm: Confirm;
-  const onCancel = function(callback?: (v?: T) => void) {
-    if (config.onCancel) {
+  const onCancel = function(callback?: Callback<T>) {
+    if (config.onCancel && typeof config.onCancel === "function") {
       config.onCancel();
-    } else if(callback && typeof callback === "function") {
+    }
+
+    if(callback && typeof callback === "function") {
       callback();
     }
+
     if (modalConfirm && modalConfirm.destroy) {
       modalConfirm.destroy();
     }
   };
 
-
   if (_.isNil(config.loading)) {
     config.loading = ref<boolean>(false);
   }
 
-  const onSubmit: any = async function(data: T, callback: (v: T) => void) {
-    let status: any = await Promise.resolve(callback(data));
-    if (typeof status === "function") {
+  const onSubmit: any = async function(data: T, callback?: Callback<T>) {
+    let res: boolean | T = data;
+    // 判断回调函数
+    if (callback && typeof callback === "function") {
       config.loading!.value = true;
+      // 执行回调函数
       try {
-        status = await Promise.resolve(status(data));
-      } catch (error) {
-        status = false;
+        const value: Callback<T> | Result<T>  = await Promise.resolve(callback(data));
+        // 如果回调函数执行结果是函数，则继续执行
+        if (typeof value === "function") {
+          res = await onSubmit(data, value);
+        } else {
+          res = value as T;
+        }
+      } catch (e) {
+        res = false;
       }
       config.loading!.value = false;
-    } 
-    if (typeof status === "boolean" && status === false) {
-      return;
     }
-    setTimeout(function() {
-      onCancel();
-    });
+    return res;
   }
 
   return new Promise(function(resolve) {
@@ -73,21 +80,33 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       appContext: getAppContext(),
     }, _.omit(config, ["icon", "class"]));
     const onClick = async function(e: Event, data?: T) {
-      const submit = center.value?.submit || center.value?.onSubmit;
+      let value: any;
+      const submit = center.value?.onSubmit || center.value?.submit;
       if (data) {
-        return onSubmit(data, config.onOk || resolve);
+        value = await onSubmit(data, config.onOk);
       } else if (submit){
         try {
-          const result = await submit();
-          if (result) {
-            return onSubmit(result, config.onOk || resolve);
+          const res = await submit();
+          if (res) {
+            value = await onSubmit(res, config.onOk);
+          } else {
+            value = false;
           }
         } catch (error) {
           // todo
         }
       } else {
-        return onSubmit(true, config.onOk || resolve);
+        value = await onSubmit(true, config.onOk);
       }
+      if (typeof value === "boolean" && value === false) {
+        return;
+      }
+      if (value) {
+        setTimeout(() => {
+          onCancel();
+        });
+      }
+      return resolve(value);
     };
     const onClose = function(e: Event) {
       const target = e.target as HTMLInputElement;
@@ -118,7 +137,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       </div>
     </div>);
 
-    modalConfirm =  Modal.confirm({
+    modalConfirm = Modal.confirm({
       ...option,
       onCancel: onClose,
       content: function(): any {
@@ -139,8 +158,8 @@ export const confirm = function<Value = string, T = object>(value: Value, config
         </div>);
       },
     });
-    if (config.onOk) {
-      resolve(modalConfirm);
-    }
+    // if (config.onOk) {
+    //   resolve(modalConfirm);
+    // }
   });
 }

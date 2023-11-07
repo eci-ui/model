@@ -3,35 +3,45 @@ import { onMounted, ref } from "vue";
 import * as modal from "../src/index";
 import { Input, Upload } from "ant-design-vue";
 import Test from "./test.vue";
+import { rules } from "@ue/form";
 
-const onSubmit = function() {
+const onSubmit = function(value: Object) {
+  console.log('submit : ', value);
   return new Promise(function(resolve) {
-    setTimeout(() => {
-      resolve(false);
+    setTimeout(function() {
+      resolve(Math.random() > 0.5 ? value : false);
     }, 1000 * 3);
   });
 }
 
 onMounted(async function() {
-  modal.form([
+  const value = await modal.form([
     {
       key: "a",
       label: "A",
-      component: Input
+      component: Input,
+      rules: rules.text()
     },
     {
       key: "b",
       label: "B",
-      component: Input
+      component: Input,
+      rules: rules.text()
     }
   ], {
     title: "AAA",
     onOk: () => onSubmit,
   });
+  console.log("modal.form = ", value);
   // modal.iframe("http://erp.eciol-dev.com/");
   // const status = await modal.sure("hello world", "提示");
   // console.log(status);
 
+  // const value = await modal.confirm(Test, {
+  //   title: "AAA",
+  //   onOk: () => onSubmit,
+  // })
+  // console.log("modal.confirm = ", value);
   
 });
 </script>

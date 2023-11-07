@@ -25,7 +25,7 @@ export const useModal = function() {
       const option = { appContext, ...toConfig(config) };
       return sure(content, option);
     },
-    form: function<T = State>(items: FormOptionValue, config?: string | ModalProps, props?: FormProps): Promise<T> {
+    form: function<T = State>(items: FormOptionValue, config?: string | ModalProps, props?: FormProps) {
       const option = { appContext, ...toConfig(config) };
       return form<T>(items, option, props);
     },
