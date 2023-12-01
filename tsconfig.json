@@ -26,8 +26,5 @@
     "test/**/*.tsx",
     "types/*.ts",
     "types/*..dts",
-  ],
-  "references": [
-    { "path": "./tsconfig.node.json" }
   ]
 }

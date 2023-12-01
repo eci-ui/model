@@ -5,10 +5,10 @@
 
 
 import * as _ from "lodash-es";
+import { GetModal } from "../lib/modal";
 import { ref, h as createElement } from "vue";
 import { getAppContext } from "../utils/config";
 import locale from "ant-design-vue/es/locale/en_US";
-import Modal from "ant-design-vue/lib/modal/index";
 import { Space, Button, Divider } from "ant-design-vue";
 
 import type { StyleValue } from "vue";
@@ -70,7 +70,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       width: 800,
       icon: null,
       closable: true,
-      okText: locale.Modal?.okText || "Submit",
+      okText: locale.Modal?.okText || "Confirm",
       cancelText: locale.Modal?.cancelText || "Cancel",
       keyboard: true,
       className: "",
@@ -137,7 +137,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       </div>
     </div>);
 
-    modalConfirm = Modal.confirm({
+    modalConfirm = GetModal().confirm({
       ...option,
       onCancel: onClose,
       content: function(): any {
@@ -158,8 +158,5 @@ export const confirm = function<Value = string, T = object>(value: Value, config
         </div>);
       },
     });
-    // if (config.onOk) {
-    //   resolve(modalConfirm);
-    // }
   });
 }
