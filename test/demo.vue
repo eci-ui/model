@@ -30,7 +30,21 @@ onMounted(async function() {
     }
   ], {
     title: "AAA",
-    onOk: () => onSubmit,
+    textAlign: "right",
+    otherText: "Next",
+    otherType: "danger",
+    onOk: onSubmit,
+    otherOk: async function(v: object) {
+      await onSubmit(v);
+      return false;
+    },
+    onCancel: async function() {
+      return new Promise(function(resolve) {
+        setTimeout(function() {
+          resolve(false);
+        }, 1000 * 3);
+      });
+    }
   });
   console.log("modal.form = ", value);
   // modal.iframe("http://erp.eciol-dev.com/");

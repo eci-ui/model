@@ -13,6 +13,7 @@ import { Space, Button, Divider } from "ant-design-vue";
 
 import type { StyleValue } from "vue";
 import type { ModalProps } from "./type";
+import type { ButtonType } from "ant-design-vue/lib/button";
 
 type Result<T> = T | boolean | undefined;
 type Callback<T> = (value?: Result<T>) => Result<T>;
@@ -24,9 +25,19 @@ export interface Confirm {
 
 export const confirm = function<Value = string, T = object>(value: Value, config: ModalProps, props: object): Promise<T | boolean | undefined> {
   let modalConfirm: Confirm;
-  const onCancel = function(callback?: Callback<T>) {
+  const onCancel = async function(callback?: Callback<T>) {
     if (config.onCancel && typeof config.onCancel === "function") {
-      config.onCancel();
+      config.loading!.value = true;
+      let status: boolean = true;
+      try {
+        status = await config.onCancel();
+      } catch (error) {
+        // todo
+      }
+      config.loading!.value = false;
+      if (typeof status === "boolean" && status === false) {
+        return false;
+      }
     }
 
     if(callback && typeof callback === "function") {
@@ -42,7 +53,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
     config.loading = ref<boolean>(false);
   }
 
-  const onSubmit: any = async function(data: T, callback?: Callback<T>) {
+  const onSubmit = async function(data: T, callback?: Callback<T>): Promise<boolean | T> {
     let res: boolean | T = data;
     // 判断回调函数
     if (callback && typeof callback === "function") {
@@ -52,7 +63,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
         const value: Callback<T> | Result<T>  = await Promise.resolve(callback(data));
         // 如果回调函数执行结果是函数，则继续执行
         if (typeof value === "function") {
-          res = await onSubmit(data, value);
+          res = await onSubmit(data, value as Callback<T>);
         } else {
           res = value as T;
         }
@@ -64,31 +75,18 @@ export const confirm = function<Value = string, T = object>(value: Value, config
     return res;
   }
 
-  return new Promise(function(resolve) {
-    const center = ref<any>(null);
-    const option = Object.assign({ 
-      width: 800,
-      icon: null,
-      closable: true,
-      okText: locale.Modal?.okText || "Confirm",
-      cancelText: locale.Modal?.cancelText || "Cancel",
-      keyboard: true,
-      className: "",
-      class: "ue-modal-main",
-      okButtonProps: {},
-      cancelButtonProps: {},
-      appContext: getAppContext(),
-    }, _.omit(config, ["icon", "class"]));
-    const onClick = async function(e: Event, data?: T) {
+  const btnType = ref<string>("");
+
+  const MakeSubmit = function(resolve: (value: T) => void, callback?: Callback<T>, submit?: () => T) {
+    return async function(data?: T) {
       let value: any;
-      const submit = center.value?.onSubmit || center.value?.submit;
       if (data) {
-        value = await onSubmit(data, config.onOk);
+        value = await onSubmit(data, callback);
       } else if (submit){
         try {
           const res = await submit();
           if (res) {
-            value = await onSubmit(res, config.onOk);
+            value = await onSubmit(res, callback);
           } else {
             value = false;
           }
@@ -96,8 +94,9 @@ export const confirm = function<Value = string, T = object>(value: Value, config
           // todo
         }
       } else {
-        value = await onSubmit(true, config.onOk);
+        value = await onSubmit(true as T, callback);
       }
+      btnType.value = "";
       if (typeof value === "boolean" && value === false) {
         return;
       }
@@ -108,7 +107,32 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       }
       return resolve(value);
     };
+  }
+
+  return new Promise(function(resolve) {
+    const center = ref<any>(null);
+    const option = Object.assign({ 
+      width: 800,
+      icon: null,
+      closable: true,
+      okType: "primary" as ButtonType,
+      okText: locale.Modal?.okText || "Confirm",
+      cancelText: locale.Modal?.cancelText || "Cancel",
+      // otherText: "Next",
+      otherType: "primary" as ButtonType,
+      keyboard: true,
+      className: "",
+      class: "ue-modal-main",
+      okButtonProps: {},
+      cancelButtonProps: {},
+      appContext: getAppContext(),
+    }, _.omit(config, ["icon", "class"]));
+
     const onClose = function(e: Event) {
+      if (option.loading?.value) {
+        return false;
+      }
+      btnType.value = "cancel";
       const target = e.target as HTMLInputElement;
       if (target) {
         // 拦截 input file 暴露的 cancel 事件
@@ -122,6 +146,26 @@ export const confirm = function<Value = string, T = object>(value: Value, config
       onCancel(resolve);
     }
 
+    const onSubmit1 = function(_e?: Event, v?: T) {
+      if (option.loading?.value) {
+        return false;
+      }
+      btnType.value = "submit1";
+      const submit = center.value?.onSubmit || center.value?.submit;
+      const click = MakeSubmit(resolve, config.onOk as Callback<T>, submit);
+      return click(v);
+    }
+
+    const onSubmit2 = function(_e?: Event, v?: T) {
+      if (option.loading?.value) {
+        return false;
+      }
+      btnType.value = "submit2";
+      const submit = center.value?.onOther || center.value?.other;
+      const click = MakeSubmit(resolve, config.otherOk as Callback<T>, submit);
+      return click(v);
+    }
+
     const textAlign: string = option.textAlign ? option.textAlign : "center";
     const buttonStyle: StyleValue = {
       "padding": "12px 24px 0", 
@@ -130,9 +174,10 @@ export const confirm = function<Value = string, T = object>(value: Value, config
     const buttons = (<div style="margin: 0 -24px;">
       { option.divider ? <Divider style="margin: 0;"></Divider> : void 0 }
       <div style={ buttonStyle }>
-        <Space>
-          <Button { ...option.cancelButtonProps } onClick={ onClose }>{ option.cancelText }</Button>
-          <Button type="primary" loading={ option.loading?.value } { ...option.okButtonProps } onClick={ onClick }>{ option.okText }</Button>
+        <Space size="middle">
+          <Button loading={ btnType.value === "cancel" &&  option.loading?.value } { ...option.cancelButtonProps } onClick={ onClose }>{ option.cancelText }</Button>
+          <Button type={ option.okType } loading={ btnType.value === "submit1" &&  option.loading?.value } { ...option.okButtonProps } onClick={ onSubmit1 }>{ option.okText }</Button>
+          { option.otherText && <Button type={ option.otherType } loading={ btnType.value === "submit2" && option.loading?.value } { ...option.okButtonProps } onClick={ onSubmit2 }>{ option.otherText }</Button> }
         </Space>
       </div>
     </div>);
@@ -145,12 +190,14 @@ export const confirm = function<Value = string, T = object>(value: Value, config
         const attr = {
           ...props,
           ref: center,
-          onSubmit (e: Event, v: T) {
-            return onClick(e, v);
+          onCancel: onClose,
+          onSubmit: function(e?: Event, v?: T) {
+            return onSubmit1(e, v);
           },
-          onCancel: onClose
+          onOther: function(e?: Event, v?: T) {
+            return onSubmit2(e, v);
+          }
         };
-        
         return (<div class={ config.class } style={ config.class ? {} : {"padding": "12px 24px"}}>
           {
             createElement(value as any, attr, slots)
