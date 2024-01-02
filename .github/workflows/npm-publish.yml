@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 16
           registry-url: ${{secrets.REGISTRY}}
-      - run: yarn i
+      - run: yarn install
       - run: npm run build
       - run: npm run types
       - run: npm publish
