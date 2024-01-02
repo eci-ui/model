@@ -22,7 +22,7 @@ const toVNode = function<Value>(value: Value): any {
       }
       return () => {
         return createElement("div", {}, [
-          createElement("div", {style: { "padding": "0 0 12px" } }, content),
+          createElement("div", {style: { "paddingBottom": "12px" } }, content),
           createElement("div", {}, vSlots)
         ]);
       };

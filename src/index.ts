@@ -9,6 +9,7 @@ import { setAppContext } from "./utils/config";
 
 export * from "./utils/index";
 export { SetModal } from "./lib/modal";
+export { SetConfig } from "./lib/config";
 export { confirm as modal } from "./components/confirm";
 
 export type { ModalProps } from "./components/type";

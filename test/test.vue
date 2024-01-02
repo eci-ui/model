@@ -11,11 +11,19 @@ defineExpose({ onSubmit });
 
 <template>
   <div>
-    <div>
+    <div class="demo-test">
       <Upload>
         <span>上传文件</span>
       </Upload>
     </div>
-    <slot name="buttons"></slot>
+    <div>
+      <slot name="buttons"></slot>
+    </div>
   </div>
 </template>
+
+<style scoped lang="less">
+.demo-test {
+  padding: 20px;
+}
+</style>

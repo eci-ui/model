@@ -9,9 +9,9 @@ import { GetModal } from "../lib/modal";
 import { ref, h as createElement } from "vue";
 import { getAppContext } from "../utils/config";
 import locale from "ant-design-vue/es/locale/en_US";
-import { Space, Button, Divider } from "ant-design-vue";
+import { Space, Button } from "ant-design-vue";
+import { MergeConfig } from "../lib/config";
 
-import type { StyleValue } from "vue";
 import type { ModalProps } from "./type";
 import type { ButtonType } from "ant-design-vue/lib/button";
 
@@ -25,6 +25,9 @@ export interface Confirm {
 
 export const confirm = function<Value = string, T = object>(value: Value, config: ModalProps, props: object): Promise<T | boolean | undefined> {
   let modalConfirm: Confirm;
+
+  config = MergeConfig(config);
+
   const onCancel = async function(callback?: Callback<T>) {
     if (config.onCancel && typeof config.onCancel === "function") {
       config.loading!.value = true;
@@ -167,23 +170,16 @@ export const confirm = function<Value = string, T = object>(value: Value, config
     }
 
     const textAlign: string = option.textAlign ? option.textAlign : "center";
-    const buttonStyle: StyleValue = {
-      "padding": "12px 24px 0", 
-      "textAlign": textAlign as any
-    }
-    const buttons = (<div style="margin: 0 -24px;">
-      { option.divider ? <Divider style="margin: 0;"></Divider> : void 0 }
-      <div style={ buttonStyle }>
-        <Space size="middle">
-          <Button loading={ btnType.value === "cancel" &&  option.loading?.value } { ...option.cancelButtonProps } onClick={ onClose }>{ option.cancelText }</Button>
-          <Button type={ option.okType } loading={ btnType.value === "submit1" &&  option.loading?.value } { ...option.okButtonProps } onClick={ onSubmit1 }>{ option.okText }</Button>
-          { option.otherText && <Button type={ option.otherType } loading={ btnType.value === "submit2" && option.loading?.value } { ...option.okButtonProps } onClick={ onSubmit2 }>{ option.otherText }</Button> }
-        </Space>
-      </div>
+    const buttons = (<div class={ option.buttonClassName } style={ `text-align: ${textAlign}` }>
+      <Space size="middle">
+        <Button loading={ btnType.value === "cancel" &&  option.loading?.value } { ...option.cancelButtonProps } onClick={ onClose }>{ option.cancelText }</Button>
+        <Button type={ option.okType } loading={ btnType.value === "submit1" &&  option.loading?.value } { ...option.okButtonProps } onClick={ onSubmit1 }>{ option.okText }</Button>
+        { option.otherText && <Button type={ option.otherType } loading={ btnType.value === "submit2" && option.loading?.value } { ...option.okButtonProps } onClick={ onSubmit2 }>{ option.otherText }</Button> }
+      </Space>
     </div>);
 
     modalConfirm = GetModal().confirm({
-      ...option,
+      ..._.omit(option, ["style"]),
       onCancel: onClose,
       content: function(): any {
         const slots = { buttons };
@@ -198,7 +194,7 @@ export const confirm = function<Value = string, T = object>(value: Value, config
             return onSubmit2(e, v);
           }
         };
-        return (<div class={ config.class } style={ config.class ? {} : {"padding": "12px 24px"}}>
+        return (<div class={ config.class } style={ option.style }>
           {
             createElement(value as any, attr, slots)
           }

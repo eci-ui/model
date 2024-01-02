@@ -14,7 +14,7 @@ const onSubmit = function(value: Object) {
   });
 }
 
-onMounted(async function() {
+const test1 = async function() {
   const value = await modal.form([
     {
       key: "a",
@@ -47,16 +47,24 @@ onMounted(async function() {
     }
   });
   console.log("modal.form = ", value);
-  // modal.iframe("http://erp.eciol-dev.com/");
-  // const status = await modal.sure("hello world", "提示");
-  // console.log(status);
+}
 
-  // const value = await modal.confirm(Test, {
-  //   title: "AAA",
-  //   onOk: () => onSubmit,
-  // })
-  // console.log("modal.confirm = ", value);
-  
+const test2 = async function() {
+  const status = await modal.sure("hello world", "提示");
+  console.log(status);
+}
+
+const test3 = async function() {
+  const value = await modal.confirm(Test, {
+    title: "AAA",
+    onOk: () => onSubmit,
+  })
+  console.log("modal.confirm = ", value);
+}
+
+onMounted(async function() {
+  // modal.iframe("http://erp.eciol-dev.com/");
+  test1();
 });
 </script>
 
