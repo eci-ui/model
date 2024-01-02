@@ -9,7 +9,7 @@
   "scripts": {
     "build": "vite build",
     "test": "vite --clearScreen --port 3000",
-    "types": "vue-tsc --jsx preserve --declaration --noEmit false --emitDeclarationOnly --resolveJsonModule true --esModuleInterop --declarationDir ./types ./src/index"
+    "types": "node types.cjs"
   },
   "keywords": [
     "modal"
@@ -33,6 +33,7 @@
     "ant-design-vue": "^3.2.13",
     "less": "^4.2.0",
     "lodash-es": "^4.17.21",
+    "shelljs": "^0.8.5",
     "ts-node": "^10.9.1",
     "tslib": "^2.4.0",
     "typescript": "^4.6.4",
