@@ -1,12 +1,11 @@
-
 import toVNode from "./node";
 import confirm from "./confirm";
-import { toConfig } from "./config";
-import { h as createElement } from "vue";
-import type { VNode, Component } from "vue";
+import {toConfig} from "./config";
+import type {VNode, Component} from "vue";
 
-import type { ModalProps } from "../components/type";
-const sure = function(content: string | VNode | Component | Array<string | VNode | Component>, config?: string | ModalProps) {
+import type {ModalProps} from "../components/type";
+
+const sure = function (content: string | VNode | Component | Array<string | VNode | Component>, config?: string | ModalProps) {
   const option: ModalProps = {
     width: 416,
     okText: "OK",

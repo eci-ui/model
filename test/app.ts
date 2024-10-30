@@ -4,13 +4,15 @@
  */
 
 import "./style.less"
+import "ant-design-vue/dist/reset.css";
+
 import Demo from "./demo.vue";
 import modal, { SetConfig } from "../src/index";
 import { createApp as create } from "vue";
 
-import "ant-design-vue/dist/antd.css";
 
 import enUS from "ant-design-vue/es/locale/en_US";
+
 
 import type { App } from "vue";
 

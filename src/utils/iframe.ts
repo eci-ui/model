@@ -1,11 +1,10 @@
-
 import confirm from "./confirm";
-import { h as createElement } from "vue";
-import type { ModalProps } from "../components/type";
+import {h as createElement} from "vue";
+import type {ModalProps} from "../components/type";
 
-const iframe = function(src: string) {
-  const iframe = createElement("iframe", { 
-    src, 
+const iframe = function (src: string) {
+  const iframe = createElement("iframe", {
+    src,
     width: "100%",
     height: "100%",
     border: "0",

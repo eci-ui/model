@@ -6,7 +6,7 @@
       line-height: 1.5rem;
     }
   }
-  
+
   &.full-ue-modal {
     .ant-modal {
       max-width: 100%;
@@ -14,11 +14,13 @@
       padding-bottom: 0;
       margin: 0;
     }
+
     .ant-modal-content {
       display: flex;
       flex-direction: column;
       height: calc(100vh);
     }
+
     .ant-modal-body {
       flex: 1;
     }
@@ -28,6 +30,7 @@
     .ant-modal-confirm-content {
       height: 100%;
     }
+
     .h-full {
       height: 100%;
       overflow: hidden;
@@ -36,16 +39,75 @@
 
 
   .ant-modal.ue-modal-main {
-    .ant-modal-body {
-      padding: 0 !important;
+    height: 100vh;
+    top: 0;
+    left: 0;
+
+    &.full-screen {
+      .ui-modal-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 56px;
+        line-height: 56px;
+        text-align: center;
+        color: rgba(0, 0, 0, 0.45);
+        font-size: 16px;
+
+        b {
+          cursor: pointer;
+          width: 28px;
+          display: inline-block;
+          margin-right: 14px;
+          user-select: none;
+
+          &:hover {
+            color: rgba(0, 0, 0, 0.75);
+          }
+        }
+
+        .full-screen-off {
+          display: none;
+        }
+      }
+
+      .ant-modal-close {
+        display: none;
+      }
+
+      &.on {
+        .ui-modal-close {
+          .full-screen-on {
+            display: none;
+          }
+
+          .full-screen-off {
+            display: inline-block;
+          }
+        }
+
+        .ant-modal-body {
+          width: calc(100vw - 60px);
+          height: calc(100vh - 60px);
+        }
+
+        .ant-modal-confirm-content {
+          height: calc(100vh - 117px);
+          --modal-height: calc(100% - 32px);
+        }
+      }
     }
+
     .ant-modal-confirm-content {
-      padding: 0 !important; 
+      padding: 0 !important;
       margin: 0 !important;
+      max-width: 100% !important;
     }
+
     .ant-modal-confirm-btns {
       display: none;
     }
+
     .ant-modal-confirm-title {
       border-color: #f0f0f0;
       border-style: solid;
@@ -56,8 +118,24 @@
       font-size: 1rem;
       line-height: 24px;
     }
+
     .confirm-form {
       padding: 24px 24px 12px;
+    }
+
+    .ant-modal-content {
+      padding: 0;
+      position: absolute;
+      width: fit-content;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .ant-modal-body {
+      width: var(--modal-width);
+      padding: 0 !important;
+      transition: all 0.15s;
     }
   }
 }
