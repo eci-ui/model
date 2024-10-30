@@ -235,15 +235,12 @@ export const confirm = function <Value = string, T = object>(value: Value, confi
         };
 
         const modalValue = function () {
-          console.log(1)
           if (config["class"] || option["style"]) {
-            console.log(2)
             return createElement("div", {
               "class": config["class"],
               "style": option["style"]
             }, createElement(value as any, attr, slots))
           } else {
-            console.log(3);
             return createElement(value as any, attr, slots)
           }
         };
