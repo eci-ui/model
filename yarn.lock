@@ -480,8 +480,8 @@
 
 "@ue/form@^0.2.3":
   version "0.2.3"
-  resolved "http://npm.ectranslate.com/@ue/form/-/form-0.2.3.tgz#0b75afc2da8c6781a755c15b10bd310cfd7e0fe3"
-  integrity sha512-fA4H4hKNDxKXFrFqtSTRVhnV5tbG2JRjDvgcXqYu+uN0Ylj+qCjaQyVc2b7NyiYVFQpv/7PkvVkpXk4XDpXqrw==
+  resolved "https://packages.aliyun.com/67a476f560ce1807612c794a/npm/eci-npm/@ue/form/-/@ue/form-0.2.3.tgz#7c91555f18935d57dc7495f6a34209d7ec1bdeb2"
+  integrity sha512-03lRXADsXkdv+h4zabr3ZpngzcFBsj8F1I+HqZel77XhdhoNg0aoD5zAam/vzmrOJ1dCACCkXx8oRIOf1o5fqA==
   dependencies:
     "@fengqiaogang/safe-get" "^0.1.4"
     "@fengqiaogang/safe-set" "^0.1.3"
